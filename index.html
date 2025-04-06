@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Halaman Utama</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #121212;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .menu-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #1f1f1f;
+      color: #fff;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      z-index: 1001;
+      transition: background-color 0.3s ease;
+    }
+
+    .menu-button:hover {
+      background-color: #2a2a2a;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      height: 100%;
+      width: 250px;
+      background-color: #1e1e1e;
+      padding-top: 40px;
+      transition: left 0.3s ease;
+      z-index: 1000;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .sidebar.active {
+      left: 0;
+    }
+
+    .profile-pic {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .profile-pic img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 2px solid #444;
+    }
+
+    .sidebar ul {
+      list-style: none;
+    }
+
+    .sidebar li {
+      padding: 15px 25px;
+      border-bottom: 1px solid #333;
+    }
+
+    .sidebar a {
+      color: #ffffffcc;
+      text-decoration: none;
+      display: block;
+      transition: color 0.3s ease;
+    }
+
+    .sidebar a:hover,
+    .sidebar a.active {
+      color: #22c55e;
+    }
+
+    .welcome-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px 30px;
+    }
+
+    .welcome-box {
+      background: linear-gradient(135deg, rgba(40, 40, 40, 0.9), rgba(30, 30, 30, 0.8));
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 40px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      max-width: 600px;
+      width: 100%;
+      margin-bottom: 40px;
+    }
+
+    .animated-text span {
+      opacity: 0;
+      display: inline-block;
+      animation: fadeInWord 0.6s forwards;
+    }
+
+    .animated-text span:nth-child(1) { animation-delay: 0.2s; }
+    .animated-text span:nth-child(2) { animation-delay: 0.6s; }
+    .animated-text span:nth-child(3) { animation-delay: 1.0s; }
+    .animated-text span:nth-child(4) { animation-delay: 1.4s; }
+    .animated-text span:nth-child(5) { animation-delay: 1.8s; }
+    .animated-text span:nth-child(6) { animation-delay: 2.2s; }
+    .animated-text span:nth-child(7) { animation-delay: 2.6s; }
+    .animated-text span:nth-child(8) { animation-delay: 3.0s; }
+
+    @keyframes fadeInWord {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    ul {
+      margin-top: 30px;
+      font-size: 18px;
+      line-height: 2;
+      padding-left: 0;
+    }
+
+    .info-box {
+      background-color: #1f1f1f;
+      padding: 30px;
+      margin-top: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      max-width: 600px;
+      width: 100%;
+    }
+
+    .info-box h2 {
+      color: #22c55e;
+      margin-bottom: 10px;
+    }
+
+    .info-box p {
+      margin-bottom: 10px;
+      color: #ccc;
+    }
+
+    .status {
+      margin-top: 10px;
+    }
+
+    .status span {
+      font-weight: bold;
+    }
+
+    .online {
+      color: #22c55e;
+    }
+
+    .offline {
+      color: #f44336;
+    }
+
+    #warning {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #f44336;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      font-weight: bold;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+  <button class="menu-button" onclick="toggleSidebar()">Lainnya</button>
+
+  <div class="sidebar" id="sidebar">
+    <div class="profile-pic">
+      <img src="https://via.placeholder.com/80" alt="Foto Profil">
+    </div>
+    <ul>
+      <li><a href="halaman_utama.html" class="active">Halaman Utama</a></li>
+      <li><a href="produk.html">produk</a></li>
+    </ul>
+  </div>
+
+  <div class="welcome-container">
+    <div class="welcome-box">
+      <h1 class="animated-text">
+        <span>Selamat</span> 
+        <span>Datang</span> 
+        <span>Kepada</span> 
+        <span>Kami</span> 
+        <span>Yang</span> 
+        <span>Siap</span> 
+        <span>Layanan</span> 
+        <span>Keperluan</span>
+      </h1>
+      <ul> 
+        <li>Server Hosting</li>
+        <li>Request Addons / Map</li>
+        <li>VPS</li>
+        <li>Domain / Subdomain</li>
+      </ul>
+    </div>
+
+    <div class="info-box">
+      <h2>Informasi Kami</h2>
+      <p>Halo Kami Hostori Berkerja Sama Dengan Adhost yang bisa siap layanan produk lengkap dan murah murah untuk informasi owner kami dibawah ini ya</p>
+      <p><strong>Supports</strong><br>
+      6283133675770 = Hostoria<br>
+      6283871005242 = Admud</p>
+      <div class="status">
+        <p>Status Online</p>
+        <p>Hostoria = <span id="hosa.activetoria-status">...</span></p>
+        <p>Admud = <span id="admud-status">...</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="warning">Warning Tidak boleh Salin</div>
+
+  <script src="config.js"></script>
+  <script>
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('active');
+    }
+
+    // Ambil status dari config.js dan tampilkan dengan warna
+    document.addEventListener('DOMContentLoaded', () => {
+      const hostoriaStatus = STATUS.hostoria === 'online' ? 'online' : 'offline';
+      const admudStatus = STATUS.admud === 'online' ? 'online' : 'offline';
+
+      document.getElementById('hostoria-status').textContent = hostoriaStatus;
+      document.getElementById('hostoria-status').className = hostoriaStatus;
+
+      document.getElementById('admud-status').textContent = admudStatus;
+      document.getElementById('admud-status').className = admudStatus;
+    });
+
+    // Fungsi Anti Salin
+    document.addEventListener('copy', function (e) {
+      e.preventDefault();
+      const warning = document.getElementById('warning');
+      warning.style.display = 'block';
+      setTimeout(() => {
+        warning.style.display = 'none';
+      }, 2500);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Produk</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background-color: #121212;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+    }
+    .menu-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #1f1f1f;
+      color: #fff;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      z-index: 1001;
+      transition: background-color 0.3s ease;
+    }
+    .menu-button:hover { background-color: #2a2a2a; }
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      height: 100%;
+      width: 250px;
+      background-color: #1e1e1e;
+      padding-top: 40px;
+      transition: left 0.3s ease;
+      z-index: 1000;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+    }
+    .sidebar.active { left: 0; }
+    .profile-pic {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .profile-pic img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 2px solid #444;
+    }
+    .sidebar ul { list-style: none; }
+    .sidebar li {
+      padding: 15px 25px;
+      border-bottom: 1px solid #333;
+    }
+    .sidebar a {
+      color: #ffffffcc;
+      text-decoration: none;
+      display: block;
+      transition: color 0.3s ease;
+    }
+    .sidebar a:hover,
+    .sidebar a.active { color: #22c55e; }
+    .content {
+      margin-top: 100px;
+      padding: 0 20px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .animated-text {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 1.6rem;
+    }
+    .animated-text span {
+      opacity: 0;
+      display: inline-block;
+      animation: fadeInWord 0.6s forwards;
+    }
+    .animated-text span:nth-child(n) { animation-delay: calc(0.4s * var(--i)); }
+    @keyframes fadeInWord {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .product {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      background-color: #1f1f1f;
+      margin-bottom: 30px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    }
+    .product-info {
+      flex: 1;
+      padding: 20px;
+    }
+    .product-info h3 {
+      color: #22c55e;
+      margin-bottom: 10px;
+    }
+    .product-info ul {
+      padding-left: 20px;
+      margin-bottom: 10px;
+    }
+    .product-info .harga {
+      margin: 10px 0;
+    }
+    select {
+      padding: 6px 10px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: none;
+      background-color: #2b2b2b;
+      color: #fff;
+    }
+    .order-btn {
+      margin-top: 10px;
+      padding: 10px 15px;
+      background-color: #22c55e;
+            border: none;
+      border-radius: 6px;
+      color: #000;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: background-color 0.3s ease;
+    }
+    .order-btn:hover { background-color: #1aa34a; }
+    .order-btn:active {
+      animation: clickAnimation 0.3s forwards;
+    }
+    @keyframes clickAnimation {
+      0% { transform: scale(1); }
+      50% { transform: scale(0.95); }
+      100% { transform: scale(1); }
+    }
+    .emoji {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.5rem;
+      opacity: 0;
+      animation: emojiAnimation 0.5s forwards;
+    }
+    @keyframes emojiAnimation {
+      0% { transform: translate(-50%, -50%) translateY(0); opacity: 1; }
+      100% { transform: translate(-50%, -50%) translateY(-20px); opacity: 0; }
+    }
+    #warning {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #f87171;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      z-index: 9999;
+    }
+    @media (max-width: 768px) {
+      .content { margin-left: 0; margin-top: 90px; }
+      .product { flex-direction: column; align-items: center; }
+      .product-info { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <button class="menu-button" onclick="toggleSidebar()">Lainnya</button>
+  <div class="sidebar" id="sidebar">
+    <div class="profile-pic">
+      <img src="https://via.placeholder.com/80" alt="Foto Profil">
+    </div>
+    <ul>
+      <li><a href="index.html">Halaman Utama</a></li>
+      <li><a href="produk.html" class="active">Produk</a></li>
+    </ul>
+  </div>
+  <div class="content">
+    <h2 class="animated-text">
+      <span style="--i:1">Selamat</span>
+      <span style="--i:2">Datang</span>
+      <span style="--i:3">Di</span>
+      <span style="--i:4">Layanan</span>
+      <span style="--i:5">Produk</span>
+      <span style="--i:6">Kami</span>
+    </h2>
+    
+    <!-- Produk 1 -->
+    <div class="product">
+      <div class="product-info">
+        <h3>Server Hosting Admin Panel</h3>
+        <ul>
+          <li>Bisa buat server hosting manual</li>
+          <li>Bisa jualan server hosting mc atau lainnya</li>
+          <li>Layanan support 24 jam</li>
+          <li>Garansi penuh untuk pilihan perbulan</li>
+          <li>Spek VPS tinggi</li>
+        </ul>
+        <div class="harga">Harga = <span id="harga1">Pilih</span></div>
+        <label>Pilih Durasi:
+          <select onchange="updateHarga(this.value, 'harga1', 1, this)">
+            <option value="">Pilihan...</option>
+            <option value="1">1 bulan</option>
+            <option value="2">2 bulan</option>
+            <option value="3">3 bulan</option>
+            <option value="4">4 bulan</option>
+            <option value="5">5 bulan</option>
+            <option value="6">Permanen</option>
+          </select>
+        </label><br>
+        <button class="order-btn" onclick="orderNow('Server Hosting Admin Panel', 'harga1')">Order Sekarang</button>
+      </div>
+    </div>
+
+    <!-- Produk 2 -->
+    <div class="product">
+      <div class="product-info">
+        <h3>Server Hosting Reseller Panel</h3>
+        <ul>
+          <li>Buat Server Hosting Bot Wa / Telegram / Discord Gunakan Bot Otomatis</li>
+          <li>Buat Server mc Bisa Di Buat</li>
+          <li>Full Garansi Untuk Perbulan</li>
+          <li>Speck Vps Tinggi Cpu Tinggi</li>
+        </ul>
+        <div class="harga">Harga = <span id="harga2">Pilih</span></div>
+        <label>Pilih Durasi:
+          <select onchange="updateHarga(this.value, 'harga2', 2, this)">
+            <option value="">Pilihan...</option>
+            <option value="1">1 bulan</option>
+            <option value="2">2 bulan</option>
+            <option value="3">3 bulan</option>
+            <option value="4">4 bulan</option>
+            <option value="5">5 bulan</option>
+            <option value="6">Permanen</option>
+          </select>
+        </label><br>
+        <button class="order-btn" onclick="orderNow('Server Hosting Reseller Panel', 'harga2')">Order Sekarang</button>
+      </div>
+    </div>
+
+    <!-- Produk 3 -->
+    <div class="product">
+      <div class="product-info">
+        <h3>Server GB Hosting</h3>
+        <ul>
+          <li>Server GB Hosting</li>
+          <li>Pilih server ingin mainkan</li>
+          <li>Anti Lag dan 99.9% uptime</li>
+          <li>Support 24 jam</li>
+          <li>Full Garansi Sampai 1 Bulan</li>
+        </ul>
+        <div class="harga">Harga = <span id="harga3">Pilih</span></div>
+        <label>Pilih RAM:
+          <select onchange="updateHarga(this.value, 'harga3', 3, this)">
+            <option value="">Pilihan...</option>
+            <option value="1">1 GB</option>
+            <option value="2">2 GB</option>
+            <option value="3">3 GB</option>
+            <option value="4">4 GB</option>
+            <option value="5">5 GB</option>
+            <option value="6">6 GB</option>
+            <option value="7">7 GB</option>
+            <option value="8">8 GB</option>
+            <option value="9">9 GB</option>
+            <option value="10">10 GB</option>
+          </select>
+        </label><br>
+        <div id="spesifikasi3" style="margin-top: 10px;">
+          RAM = <br>
+          Memory = <br>
+          Disk = <br>
+          CPU = 
+        </div>
+        <button class="order-btn" onclick="orderNow('Server GB Hosting', 'harga3')">Order Sekarang</button>
+      </div>
+    </div>
+
+  </div>
+  <div id="warning">Warning: Tidak boleh menyalin konten!</div>
+  <script>
+    const hargaProduk = {
+      1: { 1: 15, 2: 30, 3: 45, 4: 60, 5: 75, 6: 100 },
+      2: { 1: 20, 2: 40, 3: 60, 4: 80, 5: 100, 6: 130 },
+      3: { 1: 5, 2: 10, 3: 15, 4: 20, 5: 25, 6: 30, 7: 35, 8: 40, 9: 45, 10: 50 }
+    };
+
+    const spesifikasiProduk = {
+      3: {
+        1: { memory: "1 GB", disk: "10000%", cpu: "10000%" },
+        2: { memory: "2 GB", disk: "20000%", cpu: "20000%" },
+        3: { memory: "3 GB", disk: "30000%", cpu: "30000%" },
+        4: { memory: "4 GB", disk: "40000%", cpu: "40000%" },
+        5: { memory: "5 GB", disk: "50000%", cpu: "50000%" },
+        6: { memory: "6 GB", disk: "60000%", cpu: "60000%" },
+        7: { memory: "7 GB", disk: "70000%", cpu: "70000%" },
+        8: { memory: "8 GB", disk: "80000%", cpu: "80000%" },
+        9: { memory: "9 GB", disk: "90000%", cpu: "90000%" },
+        10: { memory: "10 GB", disk: "100000%", cpu: "100000%" }
+      }
+    };
+
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('active');
+    }
+
+    function updateHarga(value, hargaId, produkId, selectElement) {
+      const hargaElement = document.getElementById(hargaId);
+      const spesifikasiElement = document.getElementById('spesifikasi3');
+
+      if (value === "") {
+        // Jika pilihan adalah "Pilihan...", set harga ke "Pilih" dan reset spesifikasi
+        hargaElement.innerText = "Pilih";
+        spesifikasiElement.innerHTML = "RAM = <br>Memory = <br>Disk = <br>CPU = ";
+        return; // Keluar dari fungsi
+      }
+
+      const harga = hargaProduk[produkId][value];
+      hargaElement.innerText = harga;
+
+      // Update spesifikasi untuk produk 3
+      if (produkId === 3) {
+        const spesifikasi = spesifikasiProduk[produkId][value];
+        const spesifikasiText = `RAM = ${spesifikasi.memory} <br>Memory = ${spesifikasi.memory} <br>Disk = ${spesifikasi.disk} <br>CPU = ${spesifikasi.cpu}`;
+        spesifikasiElement.innerHTML = spesifikasiText;
+      }
+
+      // Kunci dropdown setelah memilih
+      selectElement.disabled = true;
+    }
+
+    function orderNow(produk, hargaId) {
+      const harga = document.getElementById(hargaId).innerText;
+      const select = document.querySelector(`#${hargaId}`).closest('.product-info').querySelector('select');
+      const pilihan = select.options[select.selectedIndex].text;
+
+      // Menambahkan emoji ke tombol
+      const emoji = document.createElement('span');
+      emoji.className = 'emoji';
+      emoji.innerHTML = '🛒'; // Emoji keranjang belanja
+      const button = event.currentTarget;
+      button.appendChild(emoji);
+
+      // Animasi emoji
+      setTimeout(() => {
+        emoji.remove();
+      }, 500);
+
+      const url = `https://wa.me/6283133675770?text=Halo%20kak%20mau%20order%20${encodeURIComponent(produk)}%0ADetail%20=%20${encodeURIComponent(pilihan)}%0AHarga%20=%20${harga}k`;
+      window.open(url, '_blank');
+    }
+
+    document.addEventListener('copy', function (e) {
+      e.preventDefault();
+      const warning = document.getElementById('warning');
+      warning.style.display = 'block';
+      setTimeout(() => {
+        warning.style.display = 'none';
+      }, 2500);
+    });
+  </script>
+</body>
+</html>
